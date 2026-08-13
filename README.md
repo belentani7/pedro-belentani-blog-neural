@@ -1,100 +1,58 @@
-# vinext-starter
+# La mente que no se divide
 
-A clean full-stack starter running on
-[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
-Drizzle support.
+Plataforma editorial de Pedro Belentani sobre tecnología, razón, sentimiento y vulnerabilidad. La portada convierte esos cuatro ámbitos en un organismo neural interactivo; el archivo publica seis ensayos y conecta proyectos y libros en desarrollo.
 
-## Prerequisites
+## Estado
 
-- Node.js `>=22.13.0`
+- Aplicación local. Sin despliegue ni remoto Git configurado.
+- Seis artículos completos en `content/`.
+- Hero 3D diferido: R3F/Drei en escritorio compatible; alternativa visual completa en móvil, movimiento reducido o ausencia de WebGL.
+- Movimiento con GSAP, ScrollTrigger, CustomEase y Lenis.
+- Navegación por teclado, enlace de salto, controles táctiles de 48 px y contraste objetivo WCAG AA.
+- Imagen social propia en `public/og.png`.
 
-## Quick Start
+## Desarrollo
 
-```bash
-npm install
-npm run dev
-npm run build
+Requisitos: Node.js 22.13 o superior y Bun.
+
+```powershell
+bun install
+bun run dev
 ```
 
-This starter does not use `wrangler.jsonc`.
+Abrir `http://localhost:3000`.
 
-## Included Shape
+Para que las tarjetas sociales usen el dominio final:
 
-- edit site code under `app/`
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/schema.ts` starts intentionally empty
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
-
-## Workspace Auth Headers
-
-Signed-in visitors receive both `oai-authenticated-user-id` and `oai-authenticated-user-email`. Private Sites require every visitor to sign in; public Sites may also have anonymous visitors, for whom neither header is present.
-
-The user ID is stable for the same user on the same Site and different across Sites. Email and name are intended for display or contact purposes.
-
-SIWC-authenticated workspace sites may also receive
-`oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty
-`name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by
-`oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
-
-Treat the full name as optional and fall back to email when it is absent:
-
-```tsx
-import { headers } from "next/headers";
-
-export default async function Home() {
-  const requestHeaders = await headers();
-  const userId = requestHeaders.get("oai-authenticated-user-id");
-  const email = requestHeaders.get("oai-authenticated-user-email");
-  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
-  const fullName =
-    encodedFullName &&
-    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
-      "percent-encoded-utf-8"
-      ? decodeURIComponent(encodedFullName)
-      : null;
-
-  const displayName = fullName ?? email;
-  // ...
-}
+```powershell
+$env:SITE_URL='https://dominio-ejemplo.com'
+bun run build
 ```
 
-## Optional Dispatch-Owned ChatGPT Sign-In
+## Verificación
 
-Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs
-optional or required ChatGPT sign-in:
+```powershell
+bun run lint
+bunx tsc --noEmit --pretty false
+bun run build
+bun run test:browser
+```
 
-- Use `getChatGPTUser()` for optional signed-in UI.
-- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send
-  anonymous visitors through Sign in with ChatGPT.
-- Use `chatGPTSignInPath(returnTo)` and `chatGPTSignOutPath(returnTo)` for
-  browser links or actions.
-- Pass a same-origin relative `returnTo` path for the destination after sign-in
-  or sign-out. The helper validates and safely encodes it.
-- Mark protected pages with `export const dynamic = "force-dynamic"` because
-  they depend on per-request identity headers.
+`test:browser` requiere Chrome instalado y un servidor de producción activo en `http://localhost:3000`. Puede cambiarse con `BLOG_BASE_URL`.
 
-Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the
-OAuth cookies, and identity header injection. Do not implement app routes for
-those reserved paths. Routes that do not import and call the helper remain
-anonymous-compatible.
+La prueba de navegador cubre escritorio, móvil, teclado, navegación editorial, movimiento reducido, ausencia de WebGL, desbordamiento horizontal y errores de consola.
 
-SIWC establishes identity only; it does not prove workspace membership. Use the
-Sites hosting platform's access policy controls for workspace-wide restrictions,
-or enforce explicit server-side membership or allowlist checks.
+## Arquitectura
 
-Use SIWC for account pages, user-specific dashboards, saved records, and write
-actions tied to the current ChatGPT user. Leave public content anonymous.
+- `app/components/NeuralHero.tsx`: narrativa, accesibilidad y carga condicional.
+- `app/components/NeuralField.tsx`: organismo neural WebGL.
+- `app/components/MotionProvider.tsx`: preferencia de movimiento y desplazamiento Lenis.
+- `app/articulos/[slug]/page.tsx`: rutas editoriales y metadatos.
+- `app/lib/articles.ts`: lectura y validación del corpus Markdown.
+- `content/`: fuente canónica de artículos.
+- `EDITORIAL-ROADMAP.md`: proyectos, libros y secuencia editorial.
+- `tests/`: pruebas SSR, privacidad y navegador real.
 
-## Useful Commands
+## Privacidad y publicación
 
-- `npm run dev`: start local development
-- `npm run build`: verify the vinext build output
-- `npm test`: build the starter and verify its rendered loading skeleton
-- `npm run db:generate`: generate Drizzle migrations after schema changes
-
-## Learn More
-
-- [vinext Documentation](https://github.com/cloudflare/vinext)
-- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+El contenido público excluye credenciales, datos personales de terceros, conversaciones privadas y material JUDAS sellado. Los textos distinguen hechos verificables, memoria, hipótesis e interpretación. Cualquier despliegue, dominio o publicación requiere una decisión explícita posterior.
