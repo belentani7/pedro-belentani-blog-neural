@@ -1,15 +1,20 @@
-import type { Metadata } from "next";
-import { SkeletonPreview } from "./_sites-preview/SkeletonPreview";
+import { HomePage, type HomeArticle } from "./components/HomePage";
+import { articles } from "./lib/articles";
 
-export const metadata: Metadata = {
-  title: "Your site is taking shape",
+export const metadata = {
   description:
-    "Your first version will appear here automatically when it’s ready.",
-  other: {
-    "codex-preview": "development",
-  },
+    "Tres ensayos documentados sobre complejidad legible, arte web robusto y creatividad como sistema.",
 };
 
 export default function Home() {
-  return <SkeletonPreview />;
+  const summaries: HomeArticle[] = articles.map((article) => ({
+    order: article.order,
+    slug: article.slug,
+    title: article.title,
+    bajada: article.bajada,
+    category: article.category,
+    excerpt: article.excerpt,
+    readTime: article.readTime,
+  }));
+  return <HomePage articles={summaries} />;
 }

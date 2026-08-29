@@ -1,0 +1,37 @@
+{
+  "articles": [
+    {
+      "order": 1,
+      "file": "01-complejidad-legible.md",
+      "title": "Complejidad legible",
+      "bajada": "Una interfaz puede contener muchas capas sin obligar a descifrarlas todas a la vez. Diseñar es decidir qué aparece primero, qué permanece disponible y qué puede esperar.",
+      "slug": "complejidad-legible",
+      "category": "Percepción y diseño",
+      "excerpt": "Tres estudios sobre detalles irrelevantes, primeras impresiones y memoria visual convertidos en decisiones concretas de interfaz.",
+      "readTime": "8 min",
+      "wordCount": 1320
+    },
+    {
+      "order": 2,
+      "file": "02-arte-web-robusto.md",
+      "title": "Arte web robusto",
+      "bajada": "Una experiencia inmersiva no está terminada cuando el efecto funciona. Está terminada cuando el significado sobrevive sin GPU, sin movimiento y con teclado.",
+      "slug": "arte-web-robusto",
+      "category": "Frontend inmersivo",
+      "excerpt": "WebGL, movimiento accesible y ciclos de vida de animación como partes de una misma dirección artística.",
+      "readTime": "9 min",
+      "wordCount": 1450
+    },
+    {
+      "order": 3,
+      "file": "03-creatividad-como-sistema.md",
+      "title": "Creatividad como sistema",
+      "bajada": "Generar, relacionar, evaluar y comprobar no son enemigos. La creatividad gana precisión cuando cada modo de trabajo tiene espacio y una regla de relevo.",
+      "slug": "creatividad-como-sistema",
+      "category": "Creatividad e ingeniería",
+      "excerpt": "Lo que tres estudios de cognición creativa permiten inferir para organizar un proceso de diseño, y lo que no autorizan a decir sobre una persona.",
+      "readTime": "9 min",
+      "wordCount": 1410
+    }
+  ]
+}
