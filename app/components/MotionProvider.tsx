@@ -13,8 +13,10 @@ import { gsap } from "gsap";
 import { CustomEase } from "gsap/CustomEase";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger, CustomEase);
-CustomEase.create("neural-signal", "0.76,0,0.24,1");
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, CustomEase);
+  CustomEase.create("neural-signal", "0.76,0,0.24,1");
+}
 
 interface MotionContextValue {
   motionEnabled: boolean;

@@ -14,8 +14,12 @@ export const metadata = {
     template: "%s — Pedro Belentani",
   },
   description,
+  robots: { index: true, follow: true },
   openGraph: {
     type: "website",
+    locale: "es_ES",
+    url: siteUrl,
+    siteName: "Pedro Belentani",
     title: "Pedro Belentani — Lógica, arte e interfaz",
     description,
     images: [
@@ -33,6 +37,12 @@ export const metadata = {
     description,
     images: ["/og.png"],
   },
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
@@ -41,7 +51,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+      </head>
       <body>{children}</body>
     </html>
   );
